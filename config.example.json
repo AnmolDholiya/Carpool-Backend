@@ -1,0 +1,13 @@
+﻿{
+  "port": 4000,
+  "databaseUrl": "postgres://postgres:YOUR_PASSWORD@localhost:5432/carpooling_db",
+  "jwtSecret": "change_me",
+  "smtp": {
+    "host": "smtp.example.com",
+    "port": 587,
+    "user": "your_smtp_user",
+    "pass": "your_smtp_password",
+    "fromEmail": "no-reply@example.com"
+  },
+  "googleClientId": "YOUR_GOOGLE_CLIENT_ID"
+}
