@@ -53,11 +53,12 @@ export async function loginOrRegisterWithGoogle(google: GooglePayload) {
     }
 
     // Create new user with verified email and no password (cannot login with password)
+    const userRole = isAdminEmail ? 'ADMIN' : 'USER';
     result = await pool.query(
       `INSERT INTO users (full_name, email, phone, password, role, profile_photo, email_verified)
-       VALUES ($1, $2, $3, $4, 'USER', $5, true)
+       VALUES ($1, $2, $3, $4, $5, $6, true)
        RETURNING user_id, full_name, email, phone, profile_photo, role, email_verified, created_at`,
-      [google.name || 'Google User', google.email, null, null, google.picture],
+      [google.name || 'Google User', google.email, null, null, userRole, google.picture],
     );
   }
 
