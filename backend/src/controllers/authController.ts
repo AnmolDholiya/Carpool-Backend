@@ -45,7 +45,7 @@ export async function register(req: Request, res: Response) {
 
   try {
     // Handle upload.fields() — req.files is a dict keyed by field name
-    const files = (req as any).files as Record<string, Express.Multer.File[]> | undefined;
+    const files = (req as any).files as Record<string, any[]> | undefined;
 
     let photoPath: string | null = null;
     if (files?.profile_photo?.[0]) {

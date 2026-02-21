@@ -3,7 +3,7 @@ import { pool } from '../db/pool';
 import { sendCancellationEmail } from '../services/emailService';
 import type { AuthedRequest } from '../middleware/authMiddleware';
 
-export async function createBooking(req: AuthedRequest, res: Response) {
+export async function createBooking(req: any, res: Response) {
   const riderId = req.user?.userId;
   if (!riderId) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -120,7 +120,7 @@ export async function createBooking(req: AuthedRequest, res: Response) {
   }
 }
 
-export async function handleBookingAction(req: AuthedRequest, res: Response) {
+export async function handleBookingAction(req: any, res: Response) {
   const userId = req.user?.userId;
   if (!userId) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -234,7 +234,7 @@ export async function handleBookingAction(req: AuthedRequest, res: Response) {
   }
 }
 
-export async function cancelBooking(req: AuthedRequest, res: Response) {
+export async function cancelBooking(req: any, res: Response) {
   const userId = req.user?.userId;
   if (!userId) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -362,7 +362,7 @@ export async function getMyBookings(req: AuthedRequest, res: Response) {
     );
 
     // Map to the format frontend expects (item.ride_details)
-    const formatted = bookings.rows.map(b => ({
+    const formatted = bookings.rows.map((b: any) => ({
       ...b,
       ride_details: {
         source: b.source,

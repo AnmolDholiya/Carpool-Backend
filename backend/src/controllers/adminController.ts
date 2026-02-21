@@ -23,7 +23,7 @@ export async function getAllUsers(req: AuthedRequest, res: Response) {
 }
 
 // Update user role (admin only)
-export async function updateUserRole(req: AuthedRequest, res: Response) {
+export async function updateUserRole(req: any, res: Response) {
     const { userId } = req.params;
     const { role } = req.body;
 
@@ -52,8 +52,8 @@ export async function updateUserRole(req: AuthedRequest, res: Response) {
 }
 
 // Delete user (admin only)
-export async function deleteUser(req: AuthedRequest, res: Response) {
-    const { userId } = req.params as { userId: string };
+export async function deleteUser(req: any, res: Response) {
+    const { userId } = req.params;
 
     // Prevent admin from deleting themselves
     if (req.user && parseInt(userId) === req.user.userId) {
@@ -95,8 +95,8 @@ export async function getPendingLicenses(req: AuthedRequest, res: Response) {
 }
 
 // Verify user license (admin only)
-export async function verifyLicense(req: AuthedRequest, res: Response) {
-    const { userId } = req.params as { userId: string };
+export async function verifyLicense(req: any, res: Response) {
+    const { userId } = req.params;
     const { status } = req.body;
 
     if (!status || !['VERIFIED', 'REJECTED'].includes(status)) {
@@ -155,8 +155,8 @@ export async function getPendingIdCards(req: AuthedRequest, res: Response) {
 }
 
 // Approve or reject a user's ID card (admin only)
-export async function verifyIdCardAdmin(req: AuthedRequest, res: Response) {
-    const { userId } = req.params as { userId: string };
+export async function verifyIdCardAdmin(req: any, res: Response) {
+    const { userId } = req.params;
     const { status, reason } = req.body;
 
     if (!status || !['VERIFIED', 'REJECTED'].includes(status)) {
@@ -201,8 +201,8 @@ export async function verifyIdCardAdmin(req: AuthedRequest, res: Response) {
 }
 
 // Re-trigger OCR verification for an existing id_card_photo (admin only or self-service)
-export async function reVerifyIdCard(req: AuthedRequest, res: Response) {
-    const { userId } = req.params as { userId: string };
+export async function reVerifyIdCard(req: any, res: Response) {
+    const { userId } = req.params;
 
     try {
         const result = await pool.query(
@@ -238,7 +238,7 @@ export async function reVerifyIdCard(req: AuthedRequest, res: Response) {
 }
 
 // Get full details (vehicles, ratings) for a user (admin only)
-export async function getUserFullDetails(req: AuthedRequest, res: Response) {
+export async function getUserFullDetails(req: any, res: Response) {
     const { userId } = req.params;
 
     try {
