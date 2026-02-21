@@ -81,7 +81,7 @@ export async function getMyTemplates(req: AuthedRequest, res: Response) {
             [userId]
         );
 
-        const templatesWithStops = await Promise.all(templatesResult.rows.map(async (template) => {
+        const templatesWithStops = await Promise.all(templatesResult.rows.map(async (template: any) => {
             const stopsResult = await pool.query(
                 'SELECT * FROM stops WHERE parent_id = $1 AND parent_type = \'TEMPLATE\' ORDER BY stop_order ASC',
                 [template.template_id]

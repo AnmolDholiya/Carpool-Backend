@@ -216,7 +216,7 @@ export async function searchRides(req: AuthedRequest, res: Response) {
     console.log('Search Results Sample:', ridesResult.rows[0]);
 
     // For each ride, also fetch its stops to show the full route
-    const ridesWithStops = await Promise.all(ridesResult.rows.map(async (ride) => {
+    const ridesWithStops = await Promise.all(ridesResult.rows.map(async (ride: any) => {
       const stopsResult = await pool.query(
         'SELECT * FROM stops WHERE parent_id = $1 AND parent_type = \'RIDE\' ORDER BY stop_order ASC',
         [ride.ride_id]
@@ -362,7 +362,7 @@ export async function completeRide(req: AuthedRequest, res: Response) {
 
     res.json({
       message: 'Ride completed successfully',
-      completedPassengers: passengersResult.rows.map(p => p.rider_id),
+      completedPassengers: passengersResult.rows.map((p: any) => p.rider_id),
       rideId: Number(id),
     });
 

@@ -28,7 +28,7 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-app.get('/', (_req, res) => {
+app.get('/', (_req: any, res: any) => {
   res.send('Carpooling API is running with Live Tracking');
 });
 

@@ -92,7 +92,7 @@ export async function updateProfile(req: AuthedRequest, res: Response) {
   }
 
   const { full_name, phone, gender } = req.body;
-  const files = (req as any).files as Record<string, Express.Multer.File[]> | undefined;
+  const files = (req as any).files as Record<string, any[]> | undefined;
 
   let profile_photo: string | undefined;
   if (files?.profile_photo?.[0]) {
@@ -170,7 +170,7 @@ export async function getDashboardStats(req: AuthedRequest, res: Response) {
       [userId]
     );
 
-    const asDriver = await Promise.all(upcomingRidesDriverResult.rows.map(async (ride) => {
+    const asDriver = await Promise.all(upcomingRidesDriverResult.rows.map(async (ride: any) => {
       const bookingsResult = await pool.query(
         `SELECT b.booking_id, b.rider_id, b.seats_booked, b.booking_status, u.full_name, u.profile_photo
          FROM bookings b
@@ -281,7 +281,7 @@ export async function getPublicProfile(req: AuthedRequest, res: Response) {
       [id]
     );
 
-    const upcoming_rides = await Promise.all(ridesResult.rows.map(async (ride) => {
+    const upcoming_rides = await Promise.all(ridesResult.rows.map(async (ride: any) => {
       const passengersResult = await pool.query(
         `SELECT u.user_id, u.full_name, u.profile_photo, u.gender
          FROM bookings b
@@ -291,7 +291,7 @@ export async function getPublicProfile(req: AuthedRequest, res: Response) {
       );
       return {
         ...ride,
-        passengers: passengersResult.rows.map(p => ({
+        passengers: passengersResult.rows.map((p: any) => ({
           ...p,
           profile_photo: p.profile_photo // Keep relative path
         }))
@@ -452,8 +452,8 @@ export async function getMyRides(req: AuthedRequest, res: Response) {
 
     // Organize into Active, History, Cancelled
     const allRides = [
-      ...ridesAsDriver.rows.map(r => ({ ...r, type: 'DRIVER' })),
-      ...ridesAsPassenger.rows.map(r => ({ ...r, type: 'PASSENGER' }))
+      ...ridesAsDriver.rows.map((r: any) => ({ ...r, type: 'DRIVER' })),
+      ...ridesAsPassenger.rows.map((r: any) => ({ ...r, type: 'PASSENGER' }))
     ].sort((a, b) => new Date(`${b.ride_date}T${b.ride_time}`).getTime() - new Date(`${a.ride_date}T${a.ride_time}`).getTime());
 
     const active = allRides.filter(r =>
