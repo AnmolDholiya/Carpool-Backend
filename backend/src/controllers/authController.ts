@@ -1,7 +1,7 @@
 import path from 'path';
 import type { Request, Response } from 'express';
-import { registerUser, loginUser, verifyEmailOtp } from '../services/authService';
-import { createEmailOtp } from '../services/otpService';
+import { registerUser, loginUser } from '../services/authService';
+import { createEmailOtp, verifyEmailOtp } from '../services/otpService';
 import { sendOtpEmail } from '../services/emailService';
 import { verifyGoogleIdToken, loginOrRegisterWithGoogle } from '../services/googleAuthService';
 import { verifyIdCard } from '../services/idCardVerificationService';
