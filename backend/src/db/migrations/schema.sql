@@ -2,10 +2,11 @@ CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL CHECK (length(full_name) >= 3),
     email VARCHAR(150) NOT NULL UNIQUE,
-    phone VARCHAR(15) NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    role VARCHAR(10) NOT NULL CHECK (role IN ('USER', 'ADMIN')),
+    phone VARCHAR(15) UNIQUE,
+    password TEXT,
+    role VARCHAR(10) NOT NULL DEFAULT 'USER' CHECK (role IN ('USER', 'ADMIN')),
     profile_photo TEXT,
+    email_verified BOOLEAN DEFAULT FALSE,
 
     -- Driver license (merged)
     license_no VARCHAR(50) UNIQUE,
