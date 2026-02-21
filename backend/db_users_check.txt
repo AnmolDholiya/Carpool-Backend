@@ -1,0 +1,28 @@
+--- ALL USERS ---
+[
+  {
+    "user_id": 41,
+    "full_name": "24IT014 DHOLIYA ANMOL RAKESHBHAI",
+    "email": "24it014@charusat.edu.in"
+  },
+  {
+    "user_id": 40,
+    "full_name": "Car Pooling",
+    "email": "poolingcar1@gmail.com"
+  },
+  {
+    "user_id": 39,
+    "full_name": "Anmol Dholiya",
+    "email": "anmoldholiya027@gmail.com"
+  },
+  {
+    "user_id": 37,
+    "full_name": "43. Parikshit Matieda 24TITL9F",
+    "email": "parikshit.matieda2005@gmail.com"
+  },
+  {
+    "user_id": 38,
+    "full_name": "Anmol Dholiya",
+    "email": "anmoldholiya026@gmail.com"
+  }
+]

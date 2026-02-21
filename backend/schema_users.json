@@ -1,0 +1,72 @@
+[
+  {
+    "column_name": "user_id",
+    "is_nullable": "NO",
+    "data_type": "integer"
+  },
+  {
+    "column_name": "full_name",
+    "is_nullable": "NO",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "email",
+    "is_nullable": "NO",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "phone",
+    "is_nullable": "YES",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "password",
+    "is_nullable": "YES",
+    "data_type": "text"
+  },
+  {
+    "column_name": "role",
+    "is_nullable": "NO",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "profile_photo",
+    "is_nullable": "YES",
+    "data_type": "text"
+  },
+  {
+    "column_name": "license_no",
+    "is_nullable": "YES",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "license_pdf",
+    "is_nullable": "YES",
+    "data_type": "text"
+  },
+  {
+    "column_name": "license_expiry_date",
+    "is_nullable": "YES",
+    "data_type": "date"
+  },
+  {
+    "column_name": "license_status",
+    "is_nullable": "YES",
+    "data_type": "character varying"
+  },
+  {
+    "column_name": "license_verified_at",
+    "is_nullable": "YES",
+    "data_type": "timestamp without time zone"
+  },
+  {
+    "column_name": "created_at",
+    "is_nullable": "YES",
+    "data_type": "timestamp without time zone"
+  },
+  {
+    "column_name": "email_verified",
+    "is_nullable": "NO",
+    "data_type": "boolean"
+  }
+]

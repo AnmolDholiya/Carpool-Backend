@@ -1,0 +1,13 @@
+﻿{
+  "port": 4000,
+  "databaseUrl": "postgres://postgres:5634@localhost:5432/carpooling_db",
+  "jwtSecret": "carpoolingsystem",
+  "smtp": {
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "user": "poolingcar1@gmail.com",
+    "pass": "jmiz bqhy noku gjrw",
+    "fromEmail": "poolingcar1@gmail.com"
+  },
+  "googleClientId": "1235077731-1uf1ketc9gbpbthvfh74h6em2su3dldr.apps.googleusercontent.com"
+}
