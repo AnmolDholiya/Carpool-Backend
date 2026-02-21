@@ -43,11 +43,12 @@ export async function loginOrRegisterWithGoogle(google: GooglePayload) {
   let user: any;
 
   if (result.rowCount === 0) {
-    // Domain restriction for new users
+    // Domain restriction for new users (admin email is whitelisted)
     const email = google.email.toLowerCase();
+    const isAdminEmail = email === 'poolingcar1@gmail.com';
     const isUnivEmail = email.endsWith('@charusat.edu.in') || email.endsWith('@charusat.ac.in');
 
-    if (!isUnivEmail) {
+    if (!isAdminEmail && !isUnivEmail) {
       throw new Error('Registration is restricted to Charusat university emails.');
     }
 

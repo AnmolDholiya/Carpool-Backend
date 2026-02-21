@@ -14,9 +14,14 @@ function isStrongPassword(password: string) {
   return pattern.test(password);
 }
 
+// Admin emails that are allowed regardless of domain
+const ADMIN_WHITELIST = ['poolingcar1@gmail.com'];
+
 function isValidUniversityEmail(email: string) {
+  const normalizedEmail = email.toLowerCase();
+  if (ADMIN_WHITELIST.includes(normalizedEmail)) return true;
   const domains = ['charusat.edu.in', 'charusat.ac.in'];
-  return domains.some(domain => email.toLowerCase().endsWith(`@${domain}`));
+  return domains.some(domain => normalizedEmail.endsWith(`@${domain}`));
 }
 
 // POST /api/auth/register
