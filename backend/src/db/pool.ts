@@ -1,13 +1,14 @@
 import { Pool } from 'pg';
-import { getConfig } from '../config/config';
 
-const config = getConfig();
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error('DATABASE_URL environment variable is not set');
+}
 
 export const pool = new Pool({
-  connectionString: config.databaseUrl,
-  ssl: config.databaseUrl.includes('localhost') || config.databaseUrl.includes('127.0.0.1')
+  connectionString,
+  ssl: connectionString.includes('localhost') || connectionString.includes('127.0.0.1')
     ? false
-    : { rejectUnauthorized: false }
+    : { rejectUnauthorized: false },
 });
-
-
