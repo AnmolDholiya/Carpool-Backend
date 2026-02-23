@@ -508,6 +508,28 @@ export async function getTodayRides(req: any, res: Response) {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+export async function getLatestLocation(req: AuthedRequest, res: Response) {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT latitude, longitude, recorded_at
+       FROM locations
+       WHERE ride_id = $1
+       ORDER BY recorded_at DESC
+       LIMIT 1`,
+      [id]
+    );
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'No location data yet' });
+    }
+    const { latitude, longitude, recorded_at } = result.rows[0];
+    res.json({ lat: parseFloat(latitude), lng: parseFloat(longitude), recorded_at });
+  } catch (error) {
+    console.error('Error fetching latest location:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 export async function startRide(req: AuthedRequest, res: Response) {
   const userId = req.user?.userId;
   if (!userId) {

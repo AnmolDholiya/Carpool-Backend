@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createRide, getMyRides, getRideById, searchRides, completeRide, cancelRide, getTodayRides, startRide } from '../controllers/rideController';
+import { createRide, getMyRides, getRideById, searchRides, completeRide, cancelRide, getTodayRides, startRide, getLatestLocation } from '../controllers/rideController';
 import { requireAuth } from '../middleware/authMiddleware';
 
 const router = Router();
@@ -12,6 +12,7 @@ router.get('/:id', getRideById);
 router.patch('/:id/complete', requireAuth as any, completeRide);
 router.patch('/:id/cancel', requireAuth as any, cancelRide);
 router.patch('/:id/start', requireAuth as any, startRide);
+router.get('/:id/location', requireAuth as any, getLatestLocation);
 
 export default router;
 

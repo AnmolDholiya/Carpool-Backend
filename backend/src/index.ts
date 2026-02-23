@@ -4,6 +4,7 @@ import path from 'path';
 import router from './routes';
 import { errorHandler } from './middleware/errorHandler';
 import { getConfig } from './config/config';
+import { pool } from './db/pool';
 
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -61,12 +62,22 @@ io.on('connection', (socket) => {
     console.log(`Socket ${socket.id} joined ride-${rideId}`);
   });
 
-  socket.on('update-location', (data: { rideId: string; lat: number; lng: number }) => {
+  socket.on('update-location', async (data: { rideId: string; lat: number; lng: number }) => {
     // Broadcast location to everyone in the ride room EXCEPT the sender (the driver)
     socket.to(`ride-${data.rideId}`).emit('location-updated', {
       lat: data.lat,
       lng: data.lng,
     });
+
+    // Persist the latest location to the DB so passengers can fetch it on mount
+    try {
+      await pool.query(
+        `INSERT INTO locations (ride_id, latitude, longitude) VALUES ($1, $2, $3)`,
+        [data.rideId, data.lat, data.lng]
+      );
+    } catch (err) {
+      console.error('Failed to save location to DB:', err);
+    }
   });
 
   socket.on('disconnect', () => {
