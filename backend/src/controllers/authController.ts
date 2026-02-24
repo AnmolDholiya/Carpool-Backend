@@ -6,6 +6,7 @@ import { sendOtpEmail } from '../services/emailService';
 import { verifyGoogleIdToken, loginOrRegisterWithGoogle } from '../services/googleAuthService';
 import { verifyIdCard } from '../services/idCardVerificationService';
 import { pool } from '../db/pool';
+import { signToken } from '../utils/jwt';
 
 
 function isStrongPassword(password: string) {
@@ -136,8 +137,6 @@ export async function login(req: Request, res: Response) {
 
 // POST /api/auth/verify-email
 export async function verifyEmail(req: Request, res: Response) {
-  console.log(req.body);
-
   const { user_id, otp } = req.body;
 
   if (!user_id || !otp) {
@@ -149,9 +148,23 @@ export async function verifyEmail(req: Request, res: Response) {
     if (!ok) {
       return res.status(400).json({ message: 'Invalid or expired OTP' });
     }
-    return res.json({ message: 'Email verified successfully' });
+
+    // Fetch user and return token so frontend can auto-login after verification
+    const result = await pool.query(
+      `SELECT user_id, full_name, email, phone, role, profile_photo, email_verified, created_at
+       FROM users WHERE user_id = $1`,
+      [Number(user_id)]
+    );
+    const user = result.rows[0];
+    const token = signToken({ userId: user.user_id, role: user.role });
+
+    return res.json({
+      message: 'Email verified successfully! Welcome to BlinkRide.',
+      token,
+      user,
+    });
   } catch (err) {
-    console.error(err);
+    console.error('[VerifyEmail] Error:', err);
     return res.status(500).json({ message: 'Failed to verify email' });
   }
 }
