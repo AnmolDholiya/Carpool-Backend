@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { login, register, verifyEmail, loginWithGoogle } from '../controllers/authController';
+import { login, register, verifyEmail, loginWithGoogle, resendOtp } from '../controllers/authController';
 import { upload } from '../middleware/uploadMiddleware';
 
 const router = Router();
@@ -10,6 +10,7 @@ router.post('/register', upload.fields([
     { name: 'id_card_photo', maxCount: 1 },
 ]), register);
 router.post('/verify-email', verifyEmail);
+router.post('/resend-otp', resendOtp);
 router.post('/login', login);
 router.post('/google', loginWithGoogle);
 

@@ -5,6 +5,7 @@ import { createEmailOtp, verifyEmailOtp } from '../services/otpService';
 import { sendOtpEmail } from '../services/emailService';
 import { verifyGoogleIdToken, loginOrRegisterWithGoogle } from '../services/googleAuthService';
 import { verifyIdCard } from '../services/idCardVerificationService';
+import { pool } from '../db/pool';
 
 
 function isStrongPassword(password: string) {
@@ -74,8 +75,17 @@ export async function register(req: Request, res: Response) {
       id_card_photo: idCardPath ?? null,
     });
 
+    // Generate OTP and send email as fire-and-forget
+    // This way, even if SMTP fails, registration still succeeds
     const otp = await createEmailOtp(user.user_id);
-    await sendOtpEmail(user.email, otp);
+    setImmediate(async () => {
+      try {
+        await sendOtpEmail(user.email, otp);
+        console.log(`[OTP] Email sent to ${user.email}`);
+      } catch (emailErr) {
+        console.error('[OTP] Failed to send OTP email:', emailErr);
+      }
+    });
 
     // Fire-and-forget ID card OCR verification
     if (idCardPath) {
@@ -89,15 +99,15 @@ export async function register(req: Request, res: Response) {
     }
 
     return res.status(201).json({
-      message: 'User registered. Please verify email with the OTP sent to your email address.',
+      message: 'Registration successful! An OTP has been sent to your email. Please check your inbox (and spam folder) to verify your account.',
       user_id: user.user_id,
     });
   } catch (err: any) {
     if (err.code === '23505') {
       return res.status(409).json({ message: 'Email or phone already exists' });
     }
-    console.error(err);
-    return res.status(500).json({ message: 'Failed to register user' });
+    console.error('[Register] Error:', err);
+    return res.status(500).json({ message: 'Failed to register user', detail: err.message });
   }
 }
 
@@ -143,6 +153,47 @@ export async function verifyEmail(req: Request, res: Response) {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: 'Failed to verify email' });
+  }
+}
+
+// POST /api/auth/resend-otp
+export async function resendOtp(req: Request, res: Response) {
+  const { email } = req.body;
+  if (!email) {
+    return res.status(400).json({ message: 'email is required' });
+  }
+
+  try {
+    const result = await pool.query(
+      `SELECT user_id, email_verified FROM users WHERE email = $1`,
+      [email.toLowerCase()]
+    );
+    if (result.rowCount === 0) {
+      // Don't reveal if email exists
+      return res.json({ message: 'If this email is registered, a new OTP has been sent.' });
+    }
+    const user = result.rows[0] as { user_id: number; email_verified: boolean };
+    if (user.email_verified) {
+      return res.status(400).json({ message: 'Email is already verified. Please login.' });
+    }
+
+    const otp = await createEmailOtp(user.user_id);
+    setImmediate(async () => {
+      try {
+        await sendOtpEmail(email, otp);
+        console.log(`[OTP] Resent OTP to ${email}`);
+      } catch (e) {
+        console.error('[OTP] Failed to resend OTP:', e);
+      }
+    });
+
+    return res.json({
+      message: 'A new OTP has been sent to your email. Please check your inbox and spam folder.',
+      user_id: user.user_id,
+    });
+  } catch (err) {
+    console.error('[ResendOTP] Error:', err);
+    return res.status(500).json({ message: 'Failed to resend OTP' });
   }
 }
 
