@@ -1,14 +1,18 @@
 import nodemailer from 'nodemailer';
+import dns from 'dns';
 import { getConfig } from '../config/config';
 
 const { smtp } = getConfig();
 
-// Gmail SMTP on port 465 (SSL) — force IPv4 because Render blocks outbound IPv6
+// Gmail SMTP on port 465 (SSL) — strictly force IPv4 because Render blocks outbound IPv6
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
   secure: true,
-  family: 4, // Force IPv4 — prevents ENETUNREACH on Render
+  // Force IPv4 lookup because Render's network environment often fails on IPv6
+  lookup: (hostname: string, options: any, callback: (err: Error | null, address: string, family: number) => void) => {
+    return dns.lookup(hostname, { family: 4 }, callback);
+  },
   auth: {
     user: smtp.user,
     pass: smtp.pass,
