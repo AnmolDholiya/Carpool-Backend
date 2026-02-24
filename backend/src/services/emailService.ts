@@ -3,11 +3,12 @@ import { getConfig } from '../config/config';
 
 const { smtp } = getConfig();
 
-// Gmail SMTP on port 465 (SSL) — works on Render unlike port 587
+// Gmail SMTP on port 465 (SSL) — force IPv4 because Render blocks outbound IPv6
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
   secure: true,
+  family: 4, // Force IPv4 — prevents ENETUNREACH on Render
   auth: {
     user: smtp.user,
     pass: smtp.pass,
