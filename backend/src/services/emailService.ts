@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     user: smtp.user,
     pass: smtp.pass,
   },
-});
+} as any);
 
 export async function sendOtpEmail(to: string, otp: string) {
   await transporter.sendMail({
