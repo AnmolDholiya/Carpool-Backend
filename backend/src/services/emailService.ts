@@ -1,18 +1,13 @@
 import nodemailer from 'nodemailer';
-import { Resend } from 'resend';
 import { getConfig } from '../config/config';
 
 const { smtp } = getConfig();
 
-// Resend client (fallback)
-const resend = new Resend(process.env.RESEND_API_KEY);
-const RESEND_FROM = process.env.RESEND_FROM_EMAIL || 'BlinkRide <onboarding@resend.dev>';
-
-// Nodemailer transporter using port 465 (SSL) — port 587 is blocked on Render
+// Gmail SMTP on port 465 (SSL) — works on Render unlike port 587
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
-  secure: true, // SSL
+  secure: true,
   auth: {
     user: smtp.user,
     pass: smtp.pass,
@@ -20,42 +15,26 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendOtpEmail(to: string, otp: string) {
-  const html = `
-    <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;border-radius:16px;background:#f9f9f9;">
-      <h1 style="color:#000;font-size:24px;font-weight:900;">⚡ BlinkRide</h1>
-      <p style="color:#555;">Your email verification code is:</p>
-      <div style="background:#f7d302;border-radius:12px;padding:24px;text-align:center;margin:24px 0;">
-        <span style="font-size:42px;font-weight:900;letter-spacing:14px;color:#000;">${otp}</span>
-      </div>
-      <p style="color:#888;font-size:13px;">Valid for <strong>10 minutes</strong>. Do not share this with anyone.</p>
-      <hr style="border:0;border-top:1px solid #eee;margin:20px 0;">
-      <p style="font-size:11px;color:#bbb;">BlinkRide — Charusat Campus Carpooling</p>
-    </div>
-  `;
-
-  // Try Gmail port 465 first
-  try {
-    await transporter.sendMail({
-      from: `BlinkRide <${smtp.user}>`,
-      to,
-      subject: 'Your BlinkRide verification code',
-      html,
-    });
-    console.log(`[OTP] Sent via Gmail to ${to}`);
-    return;
-  } catch (gmailErr) {
-    console.warn('[OTP] Gmail failed, trying Resend fallback:', (gmailErr as Error).message);
-  }
-
-  // Fallback: Resend API
-  await resend.emails.send({
-    from: RESEND_FROM,
+  await transporter.sendMail({
+    from: `BlinkRide <${smtp.user}>`,
     to,
     subject: 'Your BlinkRide verification code',
-    html,
+    html: `
+      <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;border-radius:16px;background:#f9f9f9;">
+        <h1 style="color:#000;font-size:24px;font-weight:900;">⚡ BlinkRide</h1>
+        <p style="color:#555;">Your email verification code is:</p>
+        <div style="background:#f7d302;border-radius:12px;padding:24px;text-align:center;margin:24px 0;">
+          <span style="font-size:42px;font-weight:900;letter-spacing:14px;color:#000;">${otp}</span>
+        </div>
+        <p style="color:#888;font-size:13px;">Valid for <strong>10 minutes</strong>. Do not share this with anyone.</p>
+        <hr style="border:0;border-top:1px solid #eee;margin:20px 0;">
+        <p style="font-size:11px;color:#bbb;">BlinkRide — Charusat Campus Carpooling</p>
+      </div>
+    `,
   });
-  console.log(`[OTP] Sent via Resend to ${to}`);
+  console.log(`[OTP] Sent via Gmail (port 465) to ${to}`);
 }
+
 
 export async function sendBookingNotification(to: string, data: {
   riderName: string,
