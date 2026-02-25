@@ -19,6 +19,7 @@ type AppConfig = {
   jwtSecret: string;
   smtp: SmtpConfig;
   googleClientId: string;
+  resendApiKey: string;
 };
 
 function loadJsonFile(filePath: string): unknown {
@@ -56,6 +57,9 @@ function assertConfig(value: any): asserts value is AppConfig {
   if (typeof value.googleClientId !== 'string' || !value.googleClientId) {
     throw new Error('config: "googleClientId" must be a non-empty string');
   }
+  if (typeof value.resendApiKey !== 'string' || !value.resendApiKey) {
+    throw new Error('config: "resendApiKey" must be a non-empty string');
+  }
 }
 
 export function getConfig(): AppConfig {
@@ -72,16 +76,18 @@ export function getConfig(): AppConfig {
       fromEmail: process.env.SMTP_FROM_EMAIL || '',
     },
     googleClientId: process.env.GOOGLE_CLIENT_ID || '',
+    resendApiKey: process.env.RESEND_API_KEY || '',
   };
 
   // If critical env vars are present, use them
-  if (envConfig.databaseUrl && envConfig.jwtSecret && envConfig.googleClientId) {
+  if (envConfig.databaseUrl && envConfig.jwtSecret && envConfig.googleClientId && envConfig.resendApiKey) {
     const fullConfig = {
       port: envConfig.port || 4000,
       databaseUrl: envConfig.databaseUrl,
       jwtSecret: envConfig.jwtSecret,
       smtp: envConfig.smtp as SmtpConfig,
       googleClientId: envConfig.googleClientId,
+      resendApiKey: envConfig.resendApiKey,
     };
     assertConfig(fullConfig);
     return fullConfig;
