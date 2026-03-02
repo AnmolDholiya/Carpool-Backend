@@ -1,6 +1,6 @@
-import { pool } from '../db/pool';
-import { hashPassword, verifyPassword } from '../utils/password';
-import { signToken } from '../utils/jwt';
+import { pool } from '../db/pool.js';
+import { hashPassword, verifyPassword } from '../utils/password.js';
+import { signToken } from '../utils/jwt.js';
 
 type DbUser = {
   user_id: number;

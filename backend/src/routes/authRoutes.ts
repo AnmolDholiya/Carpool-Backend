@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { login, register, verifyEmail, loginWithGoogle, resendOtp } from '../controllers/authController';
-import { upload } from '../middleware/uploadMiddleware';
+import { login, register, verifyEmail, loginWithGoogle, resendOtp } from '../controllers/authController.js';
+import { upload } from '../middleware/uploadMiddleware.js';
 
 const router = Router();
 

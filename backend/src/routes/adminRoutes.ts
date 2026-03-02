@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { requireAuth, requireRole } from '../middleware/authMiddleware';
-import { getAllUsers, updateUserRole, deleteUser, getPendingLicenses, verifyLicense, getPendingIdCards, verifyIdCardAdmin, reVerifyIdCard, getUserFullDetails } from '../controllers/adminController';
+import { requireAuth, requireRole } from '../middleware/authMiddleware.js';
+import { getAllUsers, updateUserRole, deleteUser, getPendingLicenses, verifyLicense, getPendingIdCards, verifyIdCardAdmin, reVerifyIdCard, getUserFullDetails } from '../controllers/adminController.js';
 
 const router = Router();
 

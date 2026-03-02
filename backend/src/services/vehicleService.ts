@@ -1,4 +1,4 @@
-import { pool } from '../db/pool';
+import { pool } from '../db/pool.js';
 
 export async function createVehicle(userId: number, input: {
     vehicle_number: string;

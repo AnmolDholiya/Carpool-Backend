@@ -1,7 +1,7 @@
 import { createWorker } from 'tesseract.js';
 import path from 'path';
-import { pool } from '../db/pool';
-import { sendIdCardVerificationEmail } from './emailService';
+import { pool } from '../db/pool.js';
+import { sendIdCardVerificationEmail } from './emailService.js';
 
 // Charusat student ID pattern: optional D + 2-digit year + 2-4 letter branch + 3-digit number
 // Examples: 24IT014, D24IT014, 22CE001, D22BCA023

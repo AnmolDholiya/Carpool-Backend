@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { getMe, uploadProfilePhoto, updateProfile, uploadLicense, getDashboardStats, getPublicProfile, submitRating, getNotifications, markNotificationAsRead, getMyRides } from '../controllers/userController';
-import { requireAuth } from '../middleware/authMiddleware';
-import { upload } from '../middleware/uploadMiddleware';
+import { getMe, uploadProfilePhoto, updateProfile, uploadLicense, getDashboardStats, getPublicProfile, submitRating, getNotifications, markNotificationAsRead, getMyRides } from '../controllers/userController.js';
+import { requireAuth } from '../middleware/authMiddleware.js';
+import { upload } from '../middleware/uploadMiddleware.js';
 
 const router = Router();
 

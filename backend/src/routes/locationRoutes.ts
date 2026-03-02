@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addLocationPoint, listLocationPoints } from '../controllers/locationController';
+import { addLocationPoint, listLocationPoints } from '../controllers/locationController.js';
 
 const router = Router();
 

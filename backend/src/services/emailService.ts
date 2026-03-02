@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { getConfig } from '../config/config';
+import { getConfig } from '../config/config.js';
 
 const { resendApiKey, smtp } = getConfig();
 const resend = new Resend(resendApiKey);

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createRide, getMyRides, getRideById, searchRides, completeRide, cancelRide, getTodayRides, startRide, getLatestLocation } from '../controllers/rideController';
-import { requireAuth } from '../middleware/authMiddleware';
+import { createRide, getMyRides, getRideById, searchRides, completeRide, cancelRide, getTodayRides, startRide, getLatestLocation } from '../controllers/rideController.js';
+import { requireAuth } from '../middleware/authMiddleware.js';
 
 const router = Router();
 

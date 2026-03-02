@@ -1,7 +1,7 @@
 import { OAuth2Client } from 'google-auth-library';
-import { getConfig } from '../config/config';
-import { pool } from '../db/pool';
-import { signToken } from '../utils/jwt';
+import { getConfig } from '../config/config.js';
+import { pool } from '../db/pool.js';
+import { signToken } from '../utils/jwt.js';
 
 const { googleClientId } = getConfig();
 const client = new OAuth2Client(googleClientId);

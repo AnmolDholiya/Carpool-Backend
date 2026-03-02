@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { submitRating, checkRating, submitPassengerRating, getRidePassengers, getUserRatings } from '../controllers/ratingController';
-import { requireAuth } from '../middleware/authMiddleware';
+import { submitRating, checkRating, submitPassengerRating, getRidePassengers, getUserRatings } from '../controllers/ratingController.js';
+import { requireAuth } from '../middleware/authMiddleware.js';
 
 const router = Router();
 

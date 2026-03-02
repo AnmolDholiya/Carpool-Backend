@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import router from './routes';
-import { errorHandler } from './middleware/errorHandler';
-import { getConfig } from './config/config';
-import { pool } from './db/pool';
+import router from './routes/index.js';
+import { errorHandler } from './middleware/errorHandler.js';
+import { getConfig } from './config/config.js';
+import { pool } from './db/pool.js';
 
 import { createServer } from 'http';
 import { Server } from 'socket.io';

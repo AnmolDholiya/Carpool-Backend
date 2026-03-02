@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { addVehicle, getMyVehicles, removeVehicle } from '../controllers/vehicleController';
-import { requireAuth } from '../middleware/authMiddleware';
+import { addVehicle, getMyVehicles, removeVehicle } from '../controllers/vehicleController.js';
+import { requireAuth } from '../middleware/authMiddleware.js';
 
 const router = Router();
 
