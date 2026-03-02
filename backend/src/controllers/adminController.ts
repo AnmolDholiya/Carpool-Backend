@@ -1,6 +1,6 @@
 import { Response } from 'express';
-import { AuthedRequest } from '../middleware/authMiddleware';
-import { pool } from '../db/pool';
+import { AuthedRequest } from '../middleware/authMiddleware.js';
+import { pool } from '../db/pool.js';
 
 // Get all users (admin only)
 export async function getAllUsers(req: AuthedRequest, res: Response) {
@@ -179,7 +179,7 @@ export async function verifyIdCardAdmin(req: any, res: Response) {
 
         // Notify user by email (non-fatal)
         try {
-            const { sendIdCardVerificationEmail } = await import('../services/emailService');
+            const { sendIdCardVerificationEmail } = await import('../services/emailService.js');
             const u = result.rows[0];
             await sendIdCardVerificationEmail(u.email, {
                 name: u.full_name,
@@ -221,7 +221,7 @@ export async function reVerifyIdCard(req: any, res: Response) {
         }
 
         // Fire-and-forget import and run
-        const { verifyIdCard } = await import('../services/idCardVerificationService');
+        const { verifyIdCard } = await import('../services/idCardVerificationService.js');
         setImmediate(async () => {
             try {
                 await verifyIdCard(user.user_id, user.id_card_photo, user.email);

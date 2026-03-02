@@ -1,7 +1,7 @@
 import type { Response } from 'express';
-import type { AuthedRequest } from '../middleware/authMiddleware';
-import { pool } from '../db/pool';
-import { sendCancellationEmail } from '../services/emailService';
+import type { AuthedRequest } from '../middleware/authMiddleware.js';
+import { pool } from '../db/pool.js';
+import { sendCancellationEmail } from '../services/emailService.js';
 
 export async function createRide(req: AuthedRequest, res: Response) {
   const userId = req.user?.userId;
@@ -345,7 +345,7 @@ export async function completeRide(req: AuthedRequest, res: Response) {
     // 7. Fire-and-forget: send completion emails to all passengers
     setImmediate(async () => {
       try {
-        const { sendRideCompletionEmail } = await import('../services/emailService');
+        const { sendRideCompletionEmail } = await import('../services/emailService.js');
         for (const passenger of passengersResult.rows) {
           await sendRideCompletionEmail(passenger.email, {
             name: passenger.full_name,

@@ -1,12 +1,12 @@
 import path from 'path';
 import type { Request, Response } from 'express';
-import { registerUser, loginUser } from '../services/authService';
-import { createEmailOtp, verifyEmailOtp } from '../services/otpService';
-import { sendOtpEmail } from '../services/emailService';
-import { verifyGoogleIdToken, loginOrRegisterWithGoogle } from '../services/googleAuthService';
-import { verifyIdCard } from '../services/idCardVerificationService';
-import { pool } from '../db/pool';
-import { signToken } from '../utils/jwt';
+import { registerUser, loginUser } from '../services/authService.js';
+import { createEmailOtp, verifyEmailOtp } from '../services/otpService.js';
+import { sendOtpEmail } from '../services/emailService.js';
+import { verifyGoogleIdToken, loginOrRegisterWithGoogle } from '../services/googleAuthService.js';
+import { verifyIdCard } from '../services/idCardVerificationService.js';
+import { pool } from '../db/pool.js';
+import { signToken } from '../utils/jwt.js';
 
 
 function isStrongPassword(password: string) {

@@ -1,6 +1,6 @@
 import type { Response } from 'express';
-import type { AuthedRequest } from '../middleware/authMiddleware';
-import { pool } from '../db/pool';
+import type { AuthedRequest } from '../middleware/authMiddleware.js';
+import { pool } from '../db/pool.js';
 
 export async function createTemplate(req: AuthedRequest, res: Response) {
     const userId = req.user?.userId;

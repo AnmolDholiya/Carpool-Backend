@@ -1,7 +1,7 @@
 import type { Response } from 'express';
-import { pool } from '../db/pool';
-import { sendCancellationEmail } from '../services/emailService';
-import type { AuthedRequest } from '../middleware/authMiddleware';
+import { pool } from '../db/pool.js';
+import { sendCancellationEmail } from '../services/emailService.js';
+import type { AuthedRequest } from '../middleware/authMiddleware.js';
 
 export async function createBooking(req: any, res: Response) {
   const riderId = req.user?.userId;
@@ -85,7 +85,7 @@ export async function createBooking(req: any, res: Response) {
 
         if (infoResult.rowCount && infoResult.rowCount > 0) {
           const info = infoResult.rows[0];
-          const { sendBookingNotification } = require('../services/emailService');
+          const { sendBookingNotification } = require('../services/emailService.js');
 
           const notificationSubject = isApprovalBased ? 'Ride Request' : 'New Booking';
           const notificationType = isApprovalBased ? 'REQUEST' : 'BOOKING';
@@ -210,7 +210,7 @@ export async function handleBookingAction(req: any, res: Response) {
 
         if (infoResult.rowCount && infoResult.rowCount > 0) {
           const info = infoResult.rows[0];
-          const { sendBookingStatusEmail } = require('../services/emailService');
+          const { sendBookingStatusEmail } = require('../services/emailService.js');
           await sendBookingStatusEmail(info.rider_email, {
             riderName: info.rider_name,
             rideDetails: `${info.source} to ${info.destination}`,

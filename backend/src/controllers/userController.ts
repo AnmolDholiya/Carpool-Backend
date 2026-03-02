@@ -1,9 +1,9 @@
 import path from 'path';
 import type { Response } from 'express';
-import type { AuthedRequest } from '../middleware/authMiddleware';
-import { getUserById, updateUserProfilePhoto, updateUiProfile, updateLicense } from '../services/userService';
-import { pool } from '../db/pool';
-import { verifyIdCard } from '../services/idCardVerificationService';
+import type { AuthedRequest } from '../middleware/authMiddleware.js';
+import { getUserById, updateUserProfilePhoto, updateUiProfile, updateLicense } from '../services/userService.js';
+import { pool } from '../db/pool.js';
+import { verifyIdCard } from '../services/idCardVerificationService.js';
 
 // ... (previous functions)
 

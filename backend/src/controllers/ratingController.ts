@@ -1,6 +1,6 @@
 import type { Response } from 'express';
-import type { AuthedRequest } from '../middleware/authMiddleware';
-import { pool } from '../db/pool';
+import type { AuthedRequest } from '../middleware/authMiddleware.js';
+import { pool } from '../db/pool.js';
 
 // POST /api/ratings  — passenger submits a rating for the driver after a completed ride
 export async function submitRating(req: AuthedRequest, res: Response) {
@@ -72,7 +72,7 @@ export async function submitRating(req: AuthedRequest, res: Response) {
     // 5. Fire-and-forget email to driver
     setImmediate(async () => {
       try {
-        const { sendReviewNotificationEmail } = await import('../services/emailService');
+        const { sendReviewNotificationEmail } = await import('../services/emailService.js');
         const passengerRes = await pool.query(`SELECT full_name FROM users WHERE user_id = $1`, [passengerId]);
         const passengerName = passengerRes.rows[0]?.full_name || 'A passenger';
 
@@ -168,7 +168,7 @@ export async function submitPassengerRating(req: AuthedRequest, res: Response) {
     // 5. Fire-and-forget email (optional, keeping consistent with submitRating)
     setImmediate(async () => {
       try {
-        const { sendReviewNotificationEmail } = await import('../services/emailService');
+        const { sendReviewNotificationEmail } = await import('../services/emailService.js');
         const driverRes = await pool.query(`SELECT full_name FROM users WHERE user_id = $1`, [driverId]);
         const driverName = driverRes.rows[0]?.full_name || 'Your driver';
 

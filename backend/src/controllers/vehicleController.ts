@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import * as vehicleService from '../services/vehicleService';
+import * as vehicleService from '../services/vehicleService.js';
 
 export async function addVehicle(req: Request, res: Response) {
   const { vehicle_number, model, seats } = req.body;
