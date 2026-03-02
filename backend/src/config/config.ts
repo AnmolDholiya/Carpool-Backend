@@ -89,20 +89,37 @@ export function getConfig(): AppConfig {
       googleClientId: envConfig.googleClientId,
       resendApiKey: envConfig.resendApiKey,
     };
-    assertConfig(fullConfig);
-    return fullConfig;
+    try {
+      assertConfig(fullConfig);
+      return fullConfig;
+    } catch (e: any) {
+      throw new Error(`Configuration validation failed: ${e.message}`);
+    }
   }
 
   // Fallback to config.json
   const configPath = path.resolve(process.cwd(), 'config.json');
-  const value = loadJsonFile(configPath);
-
-  if (!value) {
-    throw new Error('Configuration not found. Please provide environment variables or a config.json file.');
+  if (fs.existsSync(configPath)) {
+    const value = loadJsonFile(configPath);
+    if (value) {
+      assertConfig(value);
+      return value;
+    }
   }
 
-  assertConfig(value);
-  return value;
+  // If we reach here, neither valid env vars nor a valid config.json exist.
+  // We list what's missing to help debugging.
+  const missing = [];
+  if (!envConfig.databaseUrl) missing.push('DATABASE_URL');
+  if (!envConfig.jwtSecret) missing.push('JWT_SECRET');
+  if (!envConfig.googleClientId) missing.push('GOOGLE_CLIENT_ID');
+  if (!envConfig.resendApiKey) missing.push('RESEND_API_KEY');
+
+  if (missing.length > 0) {
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
+  }
+
+  throw new Error('Configuration not found. Please provide environment variables or a config.json file.');
 }
 
 
