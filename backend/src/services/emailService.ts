@@ -14,6 +14,9 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendOtpEmail(to: string, otp: string) {
+  // Disabled as per user request to use Supabase Auth for OTP
+  return;
+  /*
   const mailOptions = {
     from: smtp.fromEmail,
     to,
@@ -22,6 +25,7 @@ export async function sendOtpEmail(to: string, otp: string) {
   };
 
   await transporter.sendMail(mailOptions);
+  */
 }
 
 export async function sendBookingNotification(to: string, data: {
@@ -32,6 +36,9 @@ export async function sendBookingNotification(to: string, data: {
   destination: string,
   rideDate: string
 }) {
+  // Disabled as per user request
+  return;
+  /*
   const mailOptions = {
     from: smtp.fromEmail,
     to,
@@ -49,6 +56,7 @@ export async function sendBookingNotification(to: string, data: {
   };
 
   await transporter.sendMail(mailOptions);
+  */
 }
 
 export async function sendBookingStatusEmail(to: string, data: {
@@ -57,6 +65,9 @@ export async function sendBookingStatusEmail(to: string, data: {
   status: 'CONFIRMED' | 'REJECTED',
   rideDate: string
 }) {
+  // Disabled as per user request
+  return;
+  /*
   const isApproved = data.status === 'CONFIRMED';
   const mailOptions = {
     from: smtp.fromEmail,
@@ -77,6 +88,7 @@ export async function sendBookingStatusEmail(to: string, data: {
   };
 
   await transporter.sendMail(mailOptions);
+  */
 }
 
 export async function sendCancellationEmail(to: string, data: {
@@ -86,6 +98,9 @@ export async function sendCancellationEmail(to: string, data: {
   date: string,
   reason?: string
 }) {
+  // Disabled as per user request
+  return;
+  /*
   const isRide = data.type === 'RIDE';
   const mailOptions = {
     from: smtp.fromEmail,
@@ -107,6 +122,7 @@ export async function sendCancellationEmail(to: string, data: {
   };
 
   await transporter.sendMail(mailOptions);
+  */
 } export async function sendRideCompletionEmail(to: string, data: {
   name: string,
   source: string,
@@ -114,6 +130,9 @@ export async function sendCancellationEmail(to: string, data: {
   date: string,
   driverName: string,
 }) {
+  // Disabled as per user request
+  return;
+  /*
   const mailOptions = {
     from: smtp.fromEmail,
     to,
@@ -131,6 +150,7 @@ export async function sendCancellationEmail(to: string, data: {
   };
 
   await transporter.sendMail(mailOptions);
+  */
 }
 
 export async function sendReviewNotificationEmail(to: string, data: {
@@ -142,6 +162,9 @@ export async function sendReviewNotificationEmail(to: string, data: {
   destination: string,
   date: string,
 }) {
+  // Disabled as per user request
+  return;
+  /*
   const stars = '⭐'.repeat(data.rating);
   const mailOptions = {
     from: smtp.fromEmail,
@@ -165,6 +188,7 @@ export async function sendReviewNotificationEmail(to: string, data: {
   };
 
   await transporter.sendMail(mailOptions);
+  */
 }
 
 export async function sendIdCardVerificationEmail(to: string, data: {
@@ -172,6 +196,9 @@ export async function sendIdCardVerificationEmail(to: string, data: {
   status: 'VERIFIED' | 'REJECTED';
   reason?: string;
 }) {
+  // Disabled as per user request
+  return;
+  /*
   const isVerified = data.status === 'VERIFIED';
   const mailOptions = {
     from: smtp.fromEmail,
@@ -194,4 +221,5 @@ export async function sendIdCardVerificationEmail(to: string, data: {
     `,
   };
   await transporter.sendMail(mailOptions);
+  */
 }

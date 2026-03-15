@@ -1,6 +1,7 @@
 import path from 'path';
 import multer from 'multer';
 import fs from 'fs';
+import { Request } from 'express';
 
 const uploadDir = path.resolve(process.cwd(), 'uploads');
 
@@ -9,10 +10,10 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
+  destination: (_req: Request, _file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
     cb(null, uploadDir);
   },
-  filename: (_req, file, cb) => {
+  filename: (_req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
     const ext = path.extname(file.originalname);
     const base = path.basename(file.originalname, ext).replace(/\s+/g, '_');
     const unique = `${base}-${Date.now()}${ext}`;
@@ -25,7 +26,7 @@ export const upload = multer({
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB
   },
-  fileFilter: (_req, file, cb) => {
+  fileFilter: (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     if (!file.mimetype.startsWith('image/')) {
       return cb(new Error('Only image files are allowed'));
     }
