@@ -1,13 +1,15 @@
-﻿{
+{
   "port": 4000,
-  "databaseUrl": "postgres://postgres:YOUR_PASSWORD@localhost:5432/carpooling_db",
-  "jwtSecret": "change_me",
+  "supabaseUrl": "https://jkxrzyuiyuobkypnytzt.supabase.co",
+  "supabaseKey": "YOUR_SUPABASE_KEY",
+  "databaseUrl": "postgresql://postgres:YOUR_DB_PASSWORD@db.jkxrzyuiyuobkypnytzt.supabase.co:6543/postgres",
+  "jwtSecret": "YOUR_JWT_SECRET",
   "smtp": {
-    "host": "smtp.example.com",
+    "host": "smtp.gmail.com",
     "port": 587,
-    "user": "your_smtp_user",
-    "pass": "your_smtp_password",
-    "fromEmail": "no-reply@example.com"
+    "user": "YOUR_EMAIL",
+    "pass": "YOUR_APP_PASSWORD",
+    "fromEmail": "YOUR_EMAIL"
   },
   "googleClientId": "YOUR_GOOGLE_CLIENT_ID"
 }
