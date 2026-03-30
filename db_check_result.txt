@@ -1,0 +1,57 @@
+--- CHECKING USER ID 43 ---
+[]
+
+--- ALL VEHICLES ---
+[
+  {
+    "vehicle_id": 1,
+    "user_id": 37,
+    "vehicle_number": "GJ 05 MH 0001",
+    "model": "Lexus",
+    "seats": 4,
+    "created_at": "2026-02-15T08:19:43.410Z"
+  },
+  {
+    "vehicle_id": 2,
+    "user_id": 38,
+    "vehicle_number": "GJ 05 0001",
+    "model": "LEXUS",
+    "seats": 3,
+    "created_at": "2026-02-18T03:57:57.901Z"
+  },
+  {
+    "vehicle_id": 3,
+    "user_id": 37,
+    "vehicle_number": "GJ 01 MH 0001",
+    "model": "exter",
+    "seats": 4,
+    "created_at": "2026-02-18T10:29:44.181Z"
+  },
+  {
+    "vehicle_id": 5,
+    "user_id": 38,
+    "vehicle_number": "GJ 05 MH 0002",
+    "model": "BMWM4",
+    "seats": 4,
+    "created_at": "2026-02-18T16:26:38.160Z"
+  },
+  {
+    "vehicle_id": 6,
+    "user_id": 38,
+    "vehicle_number": "GJ 06 MH 0001",
+    "model": "RR ",
+    "seats": 4,
+    "created_at": "2026-02-18T16:32:04.948Z"
+  },
+  {
+    "vehicle_id": 7,
+    "user_id": 38,
+    "vehicle_number": "GJ 01 CV 0001",
+    "model": "CRETA",
+    "seats": 4,
+    "created_at": "2026-02-18T16:38:46.834Z"
+  }
+]
+
+--- VEHICLES FOR USER 43 ---
+[]

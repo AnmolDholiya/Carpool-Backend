@@ -9,6 +9,8 @@ import bookingRoutes from './bookingRoutes';
 import reportRoutes from './reportRoutes';
 import ratingRoutes from './ratingRoutes';
 import locationRoutes from './locationRoutes';
+import templateRoutes from './templateRoutes';
+
 
 const router = Router();
 
@@ -22,6 +24,8 @@ router.use('/bookings', bookingRoutes);
 router.use('/reports', reportRoutes);
 router.use('/ratings', ratingRoutes);
 router.use('/locations', locationRoutes);
+router.use('/templates', templateRoutes);
+
 
 export default router;
 

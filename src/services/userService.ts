@@ -2,7 +2,9 @@ import { pool } from '../db/pool';
 
 export async function getUserById(userId: number) {
   const result = await pool.query(
-    `SELECT user_id, full_name, email, phone, profile_photo, role, email_verified, license_status, created_at
+    `SELECT user_id, full_name, email, phone, profile_photo, role, gender,
+            id_card_photo, id_card_status, id_card_verified_at,
+            email_verified, license_status, created_at
      FROM users
      WHERE user_id = $1`,
     [userId],
@@ -37,25 +39,25 @@ export async function updateUiProfile(
     full_name?: string;
     phone?: string;
     profile_photo?: string;
+    gender?: string;
+    id_card_photo?: string;
   },
 ) {
-  // Dynamic query builder could be used, but this is simple enough for now
-  // We'll update fields if they are provided (not undefined)
-
-  // Fetch current user first to ensure existence and efficient update
   const currentUser = await getUserById(userId);
   if (!currentUser) return null;
 
   const newFullName = data.full_name ?? currentUser.full_name;
   const newPhone = data.phone ?? currentUser.phone;
   const newPhoto = data.profile_photo ?? currentUser.profile_photo;
+  const newGender = data.gender ?? currentUser.gender ?? null;
+  const newIdCard = data.id_card_photo ?? currentUser.id_card_photo ?? null;
 
   const result = await pool.query(
     `UPDATE users
-     SET full_name = $1, phone = $2, profile_photo = $3
-     WHERE user_id = $4
-     RETURNING user_id, full_name, email, phone, profile_photo, role, email_verified, license_status, created_at`,
-    [newFullName, newPhone, newPhoto, userId],
+     SET full_name = $1, phone = $2, profile_photo = $3, gender = $4, id_card_photo = $5
+     WHERE user_id = $6
+     RETURNING user_id, full_name, email, phone, profile_photo, gender, id_card_photo, role, email_verified, license_status, created_at`,
+    [newFullName, newPhone, newPhoto, newGender, newIdCard, userId],
   );
 
   return result.rows[0];

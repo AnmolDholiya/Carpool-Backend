@@ -9,7 +9,7 @@ export interface AuthedRequest extends Request {
   };
 }
 
-export function requireAuth(req: AuthedRequest, res: Response, next: NextFunction) {
+export function requireAuth(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -20,7 +20,7 @@ export function requireAuth(req: AuthedRequest, res: Response, next: NextFunctio
 
   try {
     const decoded = verifyToken(token);
-    req.user = decoded;
+    (req as AuthedRequest).user = decoded;
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Invalid or expired token' });
@@ -29,12 +29,13 @@ export function requireAuth(req: AuthedRequest, res: Response, next: NextFunctio
 
 // Role-based authorization middleware
 export function requireRole(...allowedRoles: string[]) {
-  return (req: AuthedRequest, res: Response, next: NextFunction) => {
-    if (!req.user) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const authedReq = req as AuthedRequest;
+    if (!authedReq.user) {
       return res.status(401).json({ message: 'Unauthenticated' });
     }
 
-    if (!allowedRoles.includes(req.user.role)) {
+    if (!allowedRoles.includes(authedReq.user.role)) {
       return res.status(403).json({ message: 'Access forbidden: insufficient permissions' });
     }
 

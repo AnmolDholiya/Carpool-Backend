@@ -43,12 +43,24 @@ export async function loginOrRegisterWithGoogle(google: GooglePayload) {
   let user: any;
 
   if (result.rowCount === 0) {
+    // Domain restriction for new users
+    const email = google.email.toLowerCase();
+    const ADMIN_EMAIL = 'poolingcar1@gmail.com';
+    const isAdminEmail = email === ADMIN_EMAIL;
+    const isUnivEmail = email.endsWith('@charusat.edu.in') || email.endsWith('@charusat.ac.in');
+
+    if (!isUnivEmail && !isAdminEmail) {
+      throw new Error('Registration is restricted to Charusat university emails.');
+    }
+
+    const role = isAdminEmail ? 'ADMIN' : 'USER';
+
     // Create new user with verified email and no password (cannot login with password)
     result = await pool.query(
       `INSERT INTO users (full_name, email, phone, password, role, profile_photo, email_verified)
-       VALUES ($1, $2, $3, $4, 'USER', $5, true)
+       VALUES ($1, $2, $3, $4, $5, $6, true)
        RETURNING user_id, full_name, email, phone, profile_photo, role, email_verified, created_at`,
-      [google.name || 'Google User', google.email, null, null, google.picture],
+      [google.name || 'Google User', google.email, null, null, role, google.picture],
     );
   }
 

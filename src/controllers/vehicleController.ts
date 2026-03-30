@@ -23,8 +23,14 @@ export async function addVehicle(req: Request, res: Response) {
 
 export async function getMyVehicles(req: Request, res: Response) {
   const userId = (req as any).user.userId;
+  const { ride_date, ride_time } = req.query;
+
   try {
-    const vehicles = await vehicleService.getUserVehicles(userId);
+    const vehicles = await vehicleService.getUserVehicles(
+      userId,
+      ride_date as string,
+      ride_time as string
+    );
     return res.json(vehicles);
   } catch (err) {
     console.error(err);

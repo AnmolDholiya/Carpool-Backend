@@ -14,11 +14,23 @@ export async function createVehicle(userId: number, input: {
     return result.rows[0];
 }
 
-export async function getUserVehicles(userId: number) {
-    const result = await pool.query(
-        `SELECT * FROM vehicles WHERE user_id = $1 ORDER BY created_at DESC`,
-        [userId]
-    );
+export async function getUserVehicles(userId: number, rideDate?: string, rideTime?: string) {
+    let query = `SELECT * FROM vehicles v WHERE user_id = $1`;
+    const params: any[] = [userId];
+
+    if (rideDate && rideTime) {
+        query += ` AND NOT EXISTS (
+            SELECT 1 FROM rides r 
+            WHERE r.vehicle_id = v.vehicle_id 
+              AND r.status IN ('ACTIVE', 'STARTED')
+              AND ABS(EXTRACT(EPOCH FROM ((r.ride_date + r.ride_time) - ($2::date + $3::time)))) < 14400
+        )`;
+        params.push(rideDate, rideTime);
+    }
+
+    query += ` ORDER BY created_at DESC`;
+
+    const result = await pool.query(query, params);
     return result.rows;
 }
 
