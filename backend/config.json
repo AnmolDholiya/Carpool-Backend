@@ -1,15 +1,3 @@
 {
-  "port": 4000,
-  "supabaseUrl": "https://jkxrzyuiyuobkypnytzt.supabase.co",
-  "supabaseKey": "sb_secret_GHxvcqhyC9ODOZejSsKFDA_tfUn8UzR",
-  "databaseUrl": "postgresql://postgres:Poolingcar%401234%40%40@db.jkxrzyuiyuobkypnytzt.supabase.co:6543/postgres",
-  "jwtSecret": "carpoolingsystem",
-  "smtp": {
-    "host": "smtp.gmail.com",
-    "port": 587,
-    "user": "poolingcar1@gmail.com",
-    "pass": "jmiz bqhy noku gjrw",
-    "fromEmail": "poolingcar1@gmail.com"
-  },
-  "googleClientId": "1235077731-1uf1ketc9gbpbthvfh74h6em2su3dldr.apps.googleusercontent.com"
+  "port": 4000
 }
