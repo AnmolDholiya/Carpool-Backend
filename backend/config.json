@@ -1,0 +1,15 @@
+{
+  "port": 4000,
+  "supabaseUrl": "https://jkxrzyuiyuobkypnytzt.supabase.co",
+  "supabaseKey": "YOUR_SUPABASE_KEY",
+  "databaseUrl": "postgresql://postgres:YOUR_DB_PASSWORD@db.jkxrzyuiyuobkypnytzt.supabase.co:6543/postgres",
+  "jwtSecret": "YOUR_JWT_SECRET",
+  "smtp": {
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "user": "YOUR_EMAIL",
+    "pass": "YOUR_APP_PASSWORD",
+    "fromEmail": "YOUR_EMAIL"
+  },
+  "googleClientId": "YOUR_GOOGLE_CLIENT_ID"
+}
