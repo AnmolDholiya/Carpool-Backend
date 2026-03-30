@@ -1,15 +1,15 @@
 {
   "port": 4000,
   "supabaseUrl": "https://jkxrzyuiyuobkypnytzt.supabase.co",
-  "supabaseKey": "YOUR_SUPABASE_KEY",
-  "databaseUrl": "postgresql://postgres:YOUR_DB_PASSWORD@db.jkxrzyuiyuobkypnytzt.supabase.co:6543/postgres",
-  "jwtSecret": "YOUR_JWT_SECRET",
+  "supabaseKey": "sb_secret_GHxvcqhyC9ODOZejSsKFDA_tfUn8UzR",
+  "databaseUrl": "postgresql://postgres:Poolingcar%401234%40%40@db.jkxrzyuiyuobkypnytzt.supabase.co:6543/postgres",
+  "jwtSecret": "carpoolingsystem",
   "smtp": {
     "host": "smtp.gmail.com",
     "port": 587,
-    "user": "YOUR_EMAIL",
-    "pass": "YOUR_APP_PASSWORD",
-    "fromEmail": "YOUR_EMAIL"
+    "user": "poolingcar1@gmail.com",
+    "pass": "jmiz bqhy noku gjrw",
+    "fromEmail": "poolingcar1@gmail.com"
   },
-  "googleClientId": "YOUR_GOOGLE_CLIENT_ID"
+  "googleClientId": "1235077731-1uf1ketc9gbpbthvfh74h6em2su3dldr.apps.googleusercontent.com"
 }
